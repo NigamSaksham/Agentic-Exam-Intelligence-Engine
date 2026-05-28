@@ -1,0 +1,285 @@
+/* CSS Reset and Variables Setup */
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', var(--font-sans);
+
+  /* Harmonic Space Dark Palette */
+  --bg-deep: #080710;
+  --bg-card: rgba(17, 16, 28, 0.45);
+  --bg-card-hover: rgba(26, 24, 42, 0.65);
+  --border-light: rgba(255, 255, 255, 0.06);
+  --border-glow: rgba(139, 92, 246, 0.3);
+
+  /* Glowing Accent Colors */
+  --color-primary: #8b5cf6;       /* Radiant Violet */
+  --color-secondary: #06b6d4;     /* Electric Cyan */
+  --color-success: #10b981;       /* Emerald */
+  --color-warning: #f59e0b;       /* Amber */
+  --color-danger: #ef4444;        /* Rose Red */
+  
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --text-glow: #e0e7ff;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-deep);
+  color: var(--text-main);
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Cosmic Background Glow Elements */
+body::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 50%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(0, 0, 0, 0) 75%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Premium Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.25);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.45);
+}
+
+/* Typography styles */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-glow);
+}
+
+/* Glassmorphism Panel Utilities */
+.glass-panel {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel-hover:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(139, 92, 246, 0.2);
+  box-shadow: 0 12px 40px 0 rgba(139, 92, 246, 0.08);
+}
+
+/* Interactive elements */
+.glowing-btn {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #6d28d9 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 14px 0 rgba(139, 92, 246, 0.4);
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.glowing-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px 0 rgba(139, 92, 246, 0.6);
+  filter: brightness(1.1);
+}
+
+.glowing-btn:active {
+  transform: translateY(1px);
+}
+
+.glowing-btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-light);
+  color: var(--text-glow);
+  box-shadow: none;
+}
+
+.glowing-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 14px 0 rgba(255, 255, 255, 0.05);
+  border-color: var(--text-muted);
+}
+
+/* Input Fields styling */
+.glass-input {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  color: white;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+}
+
+/* Status dots & glows */
+.glow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.glow-dot::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: pulse-glow 1.5s infinite;
+}
+
+.glow-dot-success { background-color: var(--color-success); }
+.glow-dot-success::after { background-color: var(--color-success); }
+
+.glow-dot-warning { background-color: var(--color-warning); }
+.glow-dot-warning::after { background-color: var(--color-warning); }
+
+.glow-dot-primary { background-color: var(--color-primary); }
+.glow-dot-primary::after { background-color: var(--color-primary); }
+
+@keyframes pulse-glow {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+/* Grid & Layout Utilities */
+.app-container {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+
+@media (max-width: 900px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sidebar navigation */
+.sidebar {
+  border-right: 1px solid var(--border-light);
+  background: rgba(10, 8, 20, 0.8);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-content {
+  padding: 32px;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    height: auto;
+    padding: 16px;
+  }
+}
+
+/* Interactive tables */
+.coral-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.coral-table th {
+  padding: 12px 16px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-light);
+  font-weight: 500;
+}
+
+.coral-table td {
+  padding: 14px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: var(--text-glow);
+}
+
+.coral-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Code sandbox terminal styling */
+.sql-terminal {
+  background: #040308;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  color: #a7f3d0;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.8);
+  overflow: auto;
+}
+
+.sql-prompt {
+  color: var(--color-secondary);
+  font-weight: bold;
+  user-select: none;
+}
