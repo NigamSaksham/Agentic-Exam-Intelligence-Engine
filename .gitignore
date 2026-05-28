@@ -1,0 +1,24 @@
+# Dependency directories
+node_modules/
+
+# Local databases
+*.db
+*.db-journal
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Custom user upload directories
+uploads/
+
+# Build outputs
+# Note: keeping dist/ in gitignore is standard for Vite, but if dist/index.html is preferred to be tracked, we can allow it
+dist/
+
+# IDE / System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

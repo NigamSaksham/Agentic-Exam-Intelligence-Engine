@@ -1,0 +1,132 @@
+name: coral_exam
+description: "SQL-grounded interface to the Coral Exam Intelligence database, providing questions, textbook outlines, and yield rankings."
+version: 1.0.0
+
+inputs:
+  - name: api_url
+    description: "The base URL of the running Coral Exam Intelligence server"
+    type: string
+    default: "http://localhost:3001"
+
+tables:
+  - name: documents
+    description: "Metadata of all uploaded textbook outline and past exam paper PDFs."
+    endpoint: "/api/coral/documents"
+    columns:
+      - name: source_id
+        type: text
+        description: "Unique identifier for the document"
+      - name: filename
+        type: text
+        description: "The original name of the uploaded PDF file"
+      - name: source_type
+        type: text
+        description: "Either 'textbook' (syllabus outline) or 'pyq' (past year papers)"
+      - name: subject
+        type: text
+        description: "The subject category (e.g. 'Operating Systems', 'Computer Networks')"
+      - name: upload_timestamp
+        type: text
+        description: "ISO timestamp of when the file was ingested"
+
+  - name: questions
+    description: "Enriched past-year exam questions extracted and vector-aligned by the Coral Engine."
+    endpoint: "/api/coral/questions"
+    columns:
+      - name: question_id
+        type: text
+        description: "Unique identifier of the question"
+      - name: source_id
+        type: text
+        description: "Foreign key referencing the source PDF document"
+      - name: year
+        type: integer
+        description: "The year the exam was held"
+      - name: topic
+        type: text
+        description: "The high-level topic category (e.g., CPU Scheduling, Network Layer)"
+      - name: subtopic
+        type: text
+        description: "The granular subtopic"
+      - name: difficulty
+        type: text
+        description: "Cognitive difficulty of the question (Easy, Medium, Hard)"
+      - name: question_type
+        type: text
+        description: "The question format (MCQ, NAT)"
+      - name: conceptual_depth
+        type: float
+        description: "Calculated conceptual depth index"
+      - name: importance_score
+        type: float
+        description: "Relevance score derived from occurrence weights"
+
+  - name: textbook_chunks
+    description: "Parsed outline sections and main concepts of the standard syllabus textbooks."
+    endpoint: "/api/coral/textbook-chunks"
+    columns:
+      - name: chunk_id
+        type: text
+        description: "Unique chunk ID"
+      - name: source_id
+        type: text
+        description: "Foreign key referencing the textbook document"
+      - name: chapter
+        type: text
+        description: "The textbook chapter name (e.g., 'Chapter 3: CPU Scheduling')"
+      - name: section
+        type: text
+        description: "The specific section title"
+      - name: main_concept
+        type: text
+        description: "The foundational concept discussed in this section"
+      - name: exam_relevance_score
+        type: float
+        description: "Relational past papers occurrence probability index"
+      - name: conceptual_importance
+        type: float
+        description: "Syllabus foundational importance index"
+
+  - name: chapter_links
+    description: "Knowledge links mapping specific past exam questions to textbook outline chapters."
+    endpoint: "/api/coral/chapter-links"
+    columns:
+      - name: question_id
+        type: text
+        description: "The question identifier"
+      - name: chunk_id
+        type: text
+        description: "The textbook chapter section chunk identifier"
+      - name: link_score
+        type: float
+        description: "Calculated alignment confidence score"
+      - name: link_reason
+        type: text
+        description: "Contextual semantic reason explaining the link connection"
+
+  - name: student_performance
+    description: "User weakness scores, practice accuracy, and last practice timestamps per syllabus topic."
+    endpoint: "/api/coral/student-performance"
+    columns:
+      - name: user_id
+        type: text
+        description: "The student's unique identifier"
+      - name: topic
+        type: text
+        description: "The syllabus topic practiced"
+      - name: score
+        type: float
+        description: "Average percentage score"
+      - name: accuracy
+        type: float
+        description: "Practice set accuracy percentage"
+      - name: weakness_score
+        type: float
+        description: "Calculated weakness score index"
+      - name: last_practiced
+        type: text
+        description: "ISO timestamp of the last practice session"
+
+test_queries:
+  - "SELECT * FROM coral_exam.documents LIMIT 5;"
+  - "SELECT chapter, count(question_id) FROM coral_exam.textbook_chunks c JOIN coral_exam.chapter_links l ON c.chunk_id = l.chunk_id GROUP BY chapter;"
