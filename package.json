@@ -1,7 +1,7 @@
 {
-  "name": "coral-native-exam-intelligence",
+  "name": "agentic-exam-intelligence-engine",
   "version": "1.0.0",
-  "description": "Coral-Native Agentic Exam Intelligence Engine",
+  "description": "Agentic Exam Intelligence Engine powered by Coral SQL runtime",
   "main": "server.js",
   "type": "module",
   "scripts": {

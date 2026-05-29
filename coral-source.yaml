@@ -1,10 +1,10 @@
 name: coral_exam
-description: "SQL-grounded interface to the Coral Exam Intelligence database, providing questions, textbook outlines, and yield rankings."
+description: "SQL-grounded interface to the Agentic Exam Intelligence Engine database, providing questions, textbook outlines, and yield rankings."
 version: 1.0.0
 
 inputs:
   - name: api_url
-    description: "The base URL of the running Coral Exam Intelligence server"
+    description: "The base URL of the running Agentic Exam Intelligence Engine server"
     type: string
     default: "http://localhost:3001"
 

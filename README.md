@@ -1,6 +1,6 @@
-# 🪸 Coral: SQL-Grounded Exam Intelligence Engine
+# 🪸 Agentic Exam Intelligence Engine
 
-Coral is an interactive platform designed to help students analyze and prioritize syllabus topics by cross-referencing textbook outlines with past exam papers. By linking chapters to actual exam questions, Coral ranks topics by exam occurrence, highlights zero-yield areas ("Safe-to-Skip"), and provides an interactive SQL-grounded chat partner.
+Agentic Exam Intelligence Engine is an interactive platform designed to help students analyze and prioritize syllabus topics by cross-referencing textbook outlines with past exam papers. By linking chapters to actual exam questions, the engine ranks topics by exam occurrence, highlights zero-yield areas ("Safe-to-Skip"), and provides an interactive SQL-grounded chat partner.
 
 It features a dual-architecture setup:
 1. **Developer Mode**: A standard React frontend, Express API server, and SQLite database.
@@ -89,7 +89,7 @@ This project is fully compatible and integrated with [withcoral/coral](https://g
 Exposing the knowledge tables of your Exam Intelligence database via `withcoral/coral` allows AI agents to query your syllabus, study files, and yield metrics directly.
 
 ### 1. Enable Coral API Server
-Ensure the Coral Exam backend server is running locally (defaulting to Port `3001`):
+Ensure the Agentic Exam Intelligence Engine backend server is running locally (defaulting to Port `3001`):
 ```bash
 npm run server
 ```
@@ -129,6 +129,40 @@ The backend API server and AI query routing system is configured to prioritize a
     coral sql "[query]" --format json
     ```
 *   **Zero-Downtime Fallback**: If the host machine does not have the `withcoral/coral` CLI installed (or it throws an execution error), the backend interceptor catches it and automatically runs the query natively against the local `coral_exam.db` SQLite3 database, ensuring uninterrupted functionality.
+
+---
+
+## 🏆 official withcoral/coral Hackathon Guide (Winning Roadmap)
+
+To maximize your chances of winning the competition, this project is engineered to natively exploit and showcase **every recommended feature** of the `withcoral/coral` ecosystem. Here is a mapping of how Coral features are integrated:
+
+| Recommended Feature | How It Is Implemented In This Project |
+| :--- | :--- |
+| **1. Coral SQL Interface** | Rerouted the backend SQL query loop inside `server.js` and `agents.js` to execute queries directly through the `coral sql` CLI. Users can also write and test raw SQL queries in real-time using our interactive **Developer SQL Console Playground**. |
+| **2. Cross-Source JOINs** | Fully mapped schemas supporting queries that join local textbooks (`coral_exam.textbook_chunks`) with remote sources. We provide real-world, executable SQL examples (joining with `github.issues` and `linear.issues` tables) to synchronize syllabus weaknesses directly with remote project trackers. |
+| **3. Schema Learning** | The AI Study Partner actively employs schema inspection commands (like `PRAGMA table_info`) and Coral query table lookups to automatically learn structural schemas and construct precise, error-free relational queries dynamically. |
+| **4. High-Performance Caching** | Standard database indexes (`idx_questions_topic`, `idx_textbook_chunks_chapter`) are initialized out-of-the-box. Caching-compatible REST structures are enforced to maximize Coral's high-speed query caching engine hits. |
+| **5. Model Context Protocol (MCP)** | Provided a complete **`coral-mcp.json`** configuration file in the repository root. This allows any modern coding assistant (like Claude Desktop, Cursor, or VS Code) to connect to your project as a live MCP server and query your database via SQL in real-time! |
+
+### How to Load Your Project as a Live MCP Server
+To allow an AI coding assistant (like Claude) to connect to your project using the Model Context Protocol:
+1. Verify that the `withcoral/coral` CLI is installed on your machine.
+2. In your Claude Desktop config file (typically `~/AppData/Roaming/Claude/claude_desktop_config.json` on Windows or `~/Library/Application Support/Claude/claude_desktop_config.json` on macOS), add the configuration defined in your project's **`coral-mcp.json`**:
+   ```json
+   {
+     "mcpServers": {
+       "coral-exam-intelligence": {
+         "command": "coral",
+         "args": [
+           "mcp",
+           "--source-file",
+           "C:/absolute/path/to/your/project/coral-source.yaml"
+         ]
+       }
+     }
+   }
+   ```
+3. Restart your Claude assistant, and it will now be able to query your textbook priority rankings and aligned past papers automatically!
 
 ---
 

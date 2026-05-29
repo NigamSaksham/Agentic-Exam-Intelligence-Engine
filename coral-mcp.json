@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "coral-exam-intelligence": {
+      "command": "coral",
+      "args": [
+        "mcp",
+        "--source-file",
+        "./coral-source.yaml"
+      ],
+      "env": {
+        "PORT": "3001",
+        "GITHUB_TOKEN": "your_github_token_if_joining_cross_sources"
+      },
+      "disabled": false
+    }
+  }
+}

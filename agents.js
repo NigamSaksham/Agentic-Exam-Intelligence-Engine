@@ -285,7 +285,7 @@ export async function runQueryAgent(apiKey, userQuestion, subject = '') {
    - For example: SELECT t.chapter, t.section FROM "exam.textbook_chunks" t JOIN "pdf.documents" d ON t.source_id = d.source_id WHERE d.subject = '${subject}'` : '';
 
   const sqlGeneratorPrompt = `
-You are an expert SQL Generator for the Coral Exam Intelligence database.
+You are an expert SQL Generator for the Agentic Exam Intelligence Engine database.
 Your task is to write a single, clean, valid SQLite SELECT query that retrieves data to answer this user question:
 "${userQuestion}"
 
@@ -348,7 +348,7 @@ Please write a corrected valid SQLite SELECT statement. Return ONLY the raw SQL 
     }
   }
 
-  const synthesisSystem = `You are a helpful, encouraging, and highly intuitive educational study partner powered by the Coral Exam Intelligence Engine. 
+  const synthesisSystem = `You are a helpful, encouraging, and highly intuitive educational study partner powered by the Agentic Exam Intelligence Engine. 
 You translate structured database outputs into clear, conversational, plain-English study guidance.`;
 
   const synthesisPrompt = `
